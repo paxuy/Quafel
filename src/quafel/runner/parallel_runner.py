@@ -141,7 +141,7 @@ def _run_node_synchronization(  # noqa: too-many-arguments
     return run_node(node, catalog, hook_manager, is_async, session_id)
 
 
-class QuafelParallelRunner(AbstractRunner):
+class ParallelRunner(AbstractRunner):
     """``ParallelRunner`` is an ``AbstractRunner`` implementation. It can
     be used to run the ``Pipeline`` in parallel groups formed by toposort.
     Please note that this `runner` implementation validates dataset using the
@@ -156,7 +156,8 @@ class QuafelParallelRunner(AbstractRunner):
         Args:
             max_workers: Number of worker processes to spawn. If not set,
                 calculated automatically based on the pipeline configuration
-                and CPU core count. On windows machines, the max_workers value
+                and CPU core count but not larger than (Core Count//2).
+                On windows machines, the max_workers value
                 cannot be larger than 61 and will be set to min(61, max_workers).
             is_async: If True, the node inputs and outputs are loaded and saved
                 asynchronously with threads. Defaults to False.
